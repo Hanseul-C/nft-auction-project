@@ -187,6 +187,7 @@ ul {
 			</div>
 		</div>
 	</section>
+<<<<<<< HEAD
         <!-- footer -->
       <div class="mt-5 p-3 bg-light">
         <div style="bottom: 0; height: 200px;">
@@ -200,6 +201,19 @@ ul {
         </div>
       </div>>
   
+=======
+  	<!-- footer -->
+	<div class="mt-5 p-3 bg-light" style="bottom: 0;">
+		<h4>NFT-AUCTION</h4>
+		<hr>
+		<div class="p-3">
+		<a href="#">이용약관</a> &nbsp;
+		<a href="#">사이트안내</a>
+		<br><br>
+		<small>문의 nftauction_admin@gmail.com</small>
+		</div>
+	</div>
+>>>>>>> origin/develop-yed
   <script type="text/javascript">
     $(document).ready(function() {
         // 로그인 버튼 클릭

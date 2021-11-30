@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -28,6 +29,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import project.spring.nft.domain.ArtVO;
 import project.spring.nft.domain.AuctionVO;
+import project.spring.nft.domain.PaymentVO;
 import project.spring.nft.pageutil.PageCriteria;
 import project.spring.nft.pageutil.PageMaker;
 import project.spring.nft.service.ArtService;
@@ -83,6 +85,7 @@ public class ArtController {
 		pageMaker.setPageData();
 		logger.info("이전 버튼 존재 유무 : "+pageMaker.isHasPrev());
 		logger.info("다음 버튼 존재 유무 : "+pageMaker.isHasNext());
+		logger.info("전체 게시글 수 : "+pageMaker.getTotalCount());
 		model.addAttribute("pageMaker", pageMaker);
 	} //end currentAllList()
 	
@@ -106,6 +109,9 @@ public class ArtController {
 		pageMaker.setCriteria(criteria);
 		pageMaker.setTotalCount(artService.getTotalNumsOfRecords());
 		pageMaker.setPageData();
+		logger.info("이전 버튼 존재 유무 : "+pageMaker.isHasPrev());
+		logger.info("다음 버튼 존재 유무 : "+pageMaker.isHasNext());
+		logger.info("전체 게시글 수 : "+pageMaker.getTotalCount());
 		model.addAttribute("pageMaker", pageMaker);
 		
 		return "main";
@@ -131,6 +137,9 @@ public class ArtController {
 		pageMaker.setCriteria(criteria);
 		pageMaker.setTotalCount(artService.getTotalNumsOfRecords());
 		pageMaker.setPageData();
+		logger.info("이전 버튼 존재 유무 : "+pageMaker.isHasPrev());
+		logger.info("다음 버튼 존재 유무 : "+pageMaker.isHasNext());
+		logger.info("전체 게시글 수 : "+pageMaker.getTotalCount());
 		model.addAttribute("pageMaker", pageMaker);
 		
 		return "main";
@@ -167,6 +176,9 @@ public class ArtController {
 
 		pageMaker.setCriteria(criteria);
 		pageMaker.setPageData();
+		logger.info("이전 버튼 존재 유무 : "+pageMaker.isHasPrev());
+		logger.info("다음 버튼 존재 유무 : "+pageMaker.isHasNext());
+		logger.info("전체 게시글 수 : "+pageMaker.getTotalCount());
 		model.addAttribute("pageMaker", pageMaker);
 		
 		return "main";
@@ -263,16 +275,35 @@ public class ArtController {
 			int maxMoney=(Integer)readMap.get("maxMoney");
 			model.addAttribute("maxMoney", maxMoney);			
 		}
+		
+		PaymentVO pvo=artService.readPayResult(artNo);
+		String payResult="";
+		if(pvo != null) { //결제된 작품이다
+			payResult="fail";
+		}else {
+			payResult="success";
+		}
+		
+		model.addAttribute("payResult", payResult);
 		model.addAttribute("vo", vo);
 		model.addAttribute("page", page);
 	} //end detail()
 	
 	@GetMapping("/arts/update")
-	public void updateGET(Model model, Integer artNo) {
+	public void updateGET(Model model, Integer artNo, HttpServletRequest request) {
 		logger.info("updateGET() 호출 : artNo = "+artNo);
+		
+		HttpSession session = request.getSession();
+		String memberId = (String) session.getAttribute("memberId");
+		
 		Map<String, Object> readMap=artService.readArtNo(artNo);
 		ArtVO vo=(ArtVO)readMap.get("vo");
-		model.addAttribute("vo", vo);
+		if(memberId.equals(vo.getMemberId())) {
+			model.addAttribute("vo", vo);
+			model.addAttribute("access", "success");
+		}else {
+			model.addAttribute("access", "fail");
+		}
 	} //end updateGET()
 	
 	@PostMapping("arts/update")
@@ -290,16 +321,26 @@ public class ArtController {
 	} //end updatePOST()
 
 	@GetMapping("arts/delete")
-	public String deletePOST(int artNo, RedirectAttributes reAttr) throws Exception {
+	public String deletePOST(int artNo, RedirectAttributes reAttr,
+			HttpServletRequest request) throws Exception {
 		logger.info("deletePOST() 호출");
-		int result=artService.deleteArt(artNo);
+		HttpSession session = request.getSession();
+		String memberId = (String) session.getAttribute("memberId");
 		
-		if(result==1) {
-			reAttr.addFlashAttribute("deleteResult", "success"); 
-			return "redirect:/main"; 
-		}else {
+		ArtVO vo=artService.readArtno(artNo);
+		if(memberId.equals(vo.getMemberId())) {
+			int result=artService.deleteArt(artNo);
+			
+			if(result==1) {
+				reAttr.addFlashAttribute("deleteResult", "success"); 
+				return "redirect:/main"; 
+			}else {
+				reAttr.addFlashAttribute("deleteResult", "fail"); 
+				return "redirect:/arts/detail?artNo="+artNo;
+			}			
+		}else { //작성자가 아닌 경우
 			reAttr.addFlashAttribute("deleteResult", "fail"); 
-			return "redirect:/arts/detail?artNo="+artNo;
+			return "redirect:/main";
 		}
 	} //end deletePOST()
 	

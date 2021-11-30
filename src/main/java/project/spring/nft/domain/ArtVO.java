@@ -11,7 +11,7 @@ public class ArtVO {
 	private int artPrice;
 	private String artContent;
 	private String artShowDate;
-	private String artBasicFee;
+	private int artBasicFee;
 	private int artReplyCount, artWishCount, artViewCount;
 	private String artFileName;
 	private String memberNickname;
@@ -19,7 +19,7 @@ public class ArtVO {
 	public ArtVO() {}
 
 	public ArtVO(int artNo, String memberId, String artName, int artPrice, String artContent, String artShowDate,
-			String artBasicFee, int artReplyCount, int artWishCount, int artViewCount, String artFileName,
+			int artBasicFee, int artReplyCount, int artWishCount, int artViewCount, String artFileName,
 			String memberNickname) {
 		super();
 		this.artNo = artNo;
@@ -84,11 +84,11 @@ public class ArtVO {
 		this.artShowDate = artShowDate;
 	}
 
-	public String getArtBasicFee() {
+	public int getArtBasicFee() {
 		return artBasicFee;
 	}
 
-	public void setArtBasicFee(String artBasicFee) {
+	public void setArtBasicFee(int artBasicFee) {
 		this.artBasicFee = artBasicFee;
 	}
 

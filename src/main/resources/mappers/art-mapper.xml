@@ -184,4 +184,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			and ${auctionResult}='T'
 		)
 	</select>
+	
+	<!-- 회원 작품 등록내역 등록순 정렬 -->
+	<select id="select_my_art" resultType="ArtVO">
+		select b.${artNo}, b.${memberId}, b.${artName}, b.${artPrice}, 
+			b.${artContent}, b.${artShowDate}, b.${artReplyCount}, 
+			b.${artWishCount}, b.${artViewCount}, b.${artFileName}, b.${memberNickname}
+		from (
+		    select rownum rn, a.*
+		    from(
+		        select * 
+		        from ${art} 
+		        where ${memberId} = #{memberId}
+				order by ${artNo} desc
+		    )a
+		)b
+		where rn between #{start} and #{end}	
+	</select>
+	
+	<!-- 회원 등록내역 카운트 -->
+	<select id="select_my_art_count" resultType="Integer">
+		select count(*) total_cnt 
+		from ${art}
+		where ${memberId}=#{memberId}
+	</select>
 </mapper>

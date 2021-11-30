@@ -11,7 +11,7 @@ public class PageMaker {
 	private boolean hasNext; // 화면에 보이는 끝 페이지 번호보다 큰 숫자의 페이지가 있는 지
 	
 	public PageMaker() {
-		this.numsOfPageLinks = 3;
+		this.numsOfPageLinks = 5;
 	}
 	
 	public PageCriteria getCriteria() {

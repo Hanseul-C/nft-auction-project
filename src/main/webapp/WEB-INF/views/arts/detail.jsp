@@ -6,14 +6,17 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <!-- 모바일 디바이스에서 터치/줌 등을 지원하기 위한 meta 태그 -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 <!-- Popper JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <!-- CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.1.3/dist/zephyr/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 <style type="text/css">
 img {
@@ -21,54 +24,50 @@ img {
 	height: auto;
 }
 
-tr {
-	width: 100%;
-	display: inline-table;
-	height: 60px;
-	table-layout: fixed;
+.scrolltbody {
+    display: inline-block;
+    width: auto;
+    border-collapse: collapse;
+    font-size: 16px;
 }
-
-table{
-  max-width: 100%;
-  height: auto;
-  table-layout: fixed;
- display: -moz-groupbox;
+.scrolltbody tbody {
+    display: inline-block;
+    height: 300px;
+    overflow: auto;
 }
-tbody{
-  overflow-y: scroll;
-  height: 300px;
-  width: 100%;
-  position: absolute;
-}
+.scrolltbody th:nth-of-type(1), .scrolltbody td:nth-of-type(1) { width: 200px; }
+.scrolltbody th:nth-of-type(2), .scrolltbody td:nth-of-type(2) { width: 200px; }
+.scrolltbody th:nth-of-type(3), .scrolltbody td:nth-of-type(3) { width: 200px; }
 </style>
-
 <title>상세 페이지 - ${vo.artName}</title>
 </head>
 <body style="text-align: center;">
 	<!-- header -->
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-		<a class="navbar-brand" href="../main">NFT-AUCTION</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse"
-			data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
-			aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="navbarNavDropdown">
-			<ul class="navbar-nav ml-auto">
-				<li class="nav-item"><a class="nav-link" href="register">작품등록</a>
-				</li>
-				<c:if test="${empty sessionScope.memberId }">
-					<li class="nav-item"><a class="nav-link" href="../members/login">로그인</a>
+	<nav class="navbar navbar-expand-lg navbar-light bg-warning sticky-top">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="../main">NFT-AUCTION</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNavDropdown">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item"><a class="nav-link" href="register">작품등록</a>
 					</li>
-					<li class="nav-item"><a class="nav-link"
-						href="/members/sign-up">회원가입</a></li>
-				</c:if>
-				<c:if test="${not empty sessionScope.memberId }">
-					<li class="nav-item"><a class="nav-link" href="../members/logout">로그아웃</a></li>
-					<li class="nav-item"><a class="nav-link"
-						href="../members/my-page/member">마이페이지</a></li>
-				</c:if>
-			</ul>
+					<c:if test="${empty sessionScope.memberId }">
+						<li class="nav-item"><a class="nav-link" href="../members/login">로그인</a>
+						</li>
+						<li class="nav-item"><a class="nav-link"
+							href="../members/sign-up">회원가입</a></li>
+					</c:if>
+					<c:if test="${not empty sessionScope.memberId }">
+						<li class="nav-item"><a class="nav-link" href="../members/logout">로그아웃</a></li>
+						<li class="nav-item"><a class="nav-link"
+							href="../members/my-page/member">마이페이지</a></li>
+					</c:if>
+				</ul>
+			</div>
 		</div>
 	</nav>
 	<br>
@@ -122,12 +121,23 @@ tbody{
 							</div>
 						</div>
 						<div style="margin: 10px;">
+<<<<<<< HEAD
 							<button class="btn btn-primary" type="button" id="btn_auction"
 								data-toggle="collapse" data-target="#collapseAuction" style="margin: 3px;"
 								aria-expanded="false" aria-controls="collapseAuction">
 								경매 참여하기</button>
 							<button id="btn_buy" class="btn btn-primary" style="margin: 3px;" type="button">
 								즉시 구매하기</button>	
+=======
+							<c:if test="${not empty sessionScope.memberId }">
+								<button class="btn btn-primary" type="button" id="btn_auction"
+									data-toggle="collapse" data-target="#collapseAuction" style="margin: 3px;"
+									aria-expanded="false" aria-controls="collapseAuction">
+									경매 참여하기</button>
+								<button id="btn_buy" class="btn btn-primary" style="margin: 3px;" type="button">
+									즉시 구매하기</button>	
+							</c:if>
+>>>>>>> origin/develop-yed
 						</div>
 						<div class="collapse" id="collapseAuction">
 							<div class="card card-body">
@@ -149,17 +159,21 @@ tbody{
 				<br>
 				<div class="row">
 					<div class="col">
-						<table class="table table-hover w-auto">
-							<thead>
-								<tr>
-									<th scope="col">닉네임</th>
-									<th scope="col">입찰가격</th>
-									<th scope="col">입찰시각</th>
-								</tr>
-							</thead>
-							<tbody id="auctionTable">
-							</tbody>
-						</table>
+						<div class="card mb-4">
+							<div class="card-body">
+								<table class="table table-hover scrolltbody">
+									<thead>
+										<tr>
+											<th scope="col">닉네임</th>
+											<th scope="col">입찰가격</th>
+											<th scope="col">입찰시각</th>
+										</tr>
+									</thead>
+									<tbody id="auctionTable">
+									</tbody>
+								</table>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -179,7 +193,7 @@ tbody{
 							<div class="tab-pane fade show active" id="content">
 								<br>
 								<p>${vo.artContent }</p>
-								<c:if test="${not empty sessionScope.memberId }">
+								<c:if test="${vo.memberId eq sessionScope.memberId}">
 									<div style="text-align: right;">
 										<a href="update?artNo=${vo.artNo }"><button type="button" class="btn btn-primary">수정</button></a>
 										<a href="delete?artNo=${vo.artNo }"><button type="button" class="btn btn-primary">삭제</button></a>
@@ -190,7 +204,7 @@ tbody{
 								<br>
 								<div class="input-group mb-3">
 									<c:if test="${empty sessionScope.memberId }">
-										<p>로그인한 회원만 댓글 작성이 가능합니다. <a href="../members/login">로그인하기</a></p>
+										<p>로그인한 회원만 댓글 작성이 가능합니다. <a href="../members/login?artNo=${vo.artNo }">로그인하기</a></p>
 									</c:if>
 							    	<c:if test="${not empty sessionScope.memberId }">
 							     		<input type="hidden" id="memberReplyNo" readonly>
@@ -211,9 +225,16 @@ tbody{
 		</div>
 	</div>
 	<!-- footer -->
-	<div class="jumbotron text-center mt-5 mb-0">
-		<h4>NFT-AUCTION</h4>
-		<p>이용약관 고객센터..주소..어쩌구</p>
+	<div class="mt-5 p-3 bg-light">
+		<div style="bottom: 0; height: 200px;">
+			<h4>NFT-AUCTION</h4>
+			<hr>
+			<br>
+			<a href="#">이용약관</a> &nbsp;
+			<a href="#">사이트안내</a>
+			<br><br>
+			<small>문의 nftauction_admin@gmail.com</small>
+		</div>
 	</div>
 	<!-- hidden -->
 	<input type="hidden" id="show_date" value="${vo.artShowDate }">

@@ -34,17 +34,16 @@ public class ArtDAOTest {
 		//testSelect();
 //		testSearch();
 		//getNums();
-		testSelectbyMemberId();
+		//testSelectbyMemberId();
 	}
 
-	private void testSelectbyMemberId() {
-		String memberId = "test";
-		List<ArtVO> list = dao.selectMemberId(memberId);
-		for (ArtVO vo : list) {
-			logger.info(vo.toString());
-		}
-		
-	}
+	/*
+	 * private void testSelectbyMemberId() { String memberId = "test"; List<ArtVO>
+	 * list = dao.selectMemberId(memberId); for (ArtVO vo : list) {
+	 * logger.info(vo.toString()); }
+	 * 
+	 * }
+	 */
 
 //	private void testSearch() {
 //		PageCriteria criteria = new PageCriteria(1,3);

@@ -15,42 +15,44 @@
 <!-- Popper JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <!-- CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/minty/bootstrap.min.css" integrity="sha384-H4X+4tKc7b8s4GoMrylmy2ssQYpDHoqzPa9aKXbDwPoPUA3Ra8PA5dGzijN+ePnH" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.1.3/dist/zephyr/bootstrap.min.css">
 <title>로그인 페이지</title>
 </head>
 <body style="text-align: center;">
 	<!-- header -->
-	<nav class="navbar navbar-expand-lg navbar-dark bg-warning sticky-top">
-		<a class="navbar-brand" href="../main">NFT-AUCTION</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse"
-			data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
-			aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="navbarNavDropdown">
-			<ul class="navbar-nav ml-auto">
-				<li class="nav-item"><a class="nav-link" href="../arts/register">작품등록</a>
-				</li>
-				<c:if test="${empty sessionScope.memberId }">
-					<li class="nav-item"><a class="nav-link" href="login">로그인</a>
+	<nav class="navbar navbar-expand-lg navbar-light bg-warning sticky-top">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="../main">NFT-AUCTION</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNavDropdown">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item"><a class="nav-link" href="../arts/register">작품등록</a>
 					</li>
-					<li class="nav-item"><a class="nav-link"
-						href="sign-up">회원가입</a></li>
-				</c:if>
-				<c:if test="${not empty sessionScope.memberId }">
-					<li class="nav-item"><a class="nav-link" href="logout">로그아웃</a></li>
-					<li class="nav-item"><a class="nav-link"
-						href="my-page/member">마이페이지</a></li>
-				</c:if>
-			</ul>
+					<c:if test="${empty sessionScope.memberId }">
+						<li class="nav-item"><a class="nav-link" href="login">로그인</a>
+						</li>
+						<li class="nav-item"><a class="nav-link"
+							href="sign-up">회원가입</a></li>
+					</c:if>
+					<c:if test="${not empty sessionScope.memberId }">
+						<li class="nav-item"><a class="nav-link" href="logout">로그아웃</a></li>
+						<li class="nav-item"><a class="nav-link"
+							href="my-page/member">마이페이지</a></li>
+					</c:if>
+				</ul>
+			</div>
 		</div>
 	</nav>
 	<!-- body -->
 	<br>
-	<div class="container">
+	<div class="container" style="padding-bottom: 200px">
 		<div class="row justify-content-center">
 			<div class="col-sm-6">
-				<div class="card border-primary mb-3">
+				<div class="card border-primary mb-3 mt-5">
 					<div class="card-body p-5">
 						<h2>로그인</h2>
 						<form action="login" method="post">
@@ -77,12 +79,17 @@
 		</div>
 	</div>
 	<!-- footer -->
-	<footer class="bd-footer py-5 mt-5 bg-light fixed-bottom">
-		<div class="container py-5">
+	<div class="mt-5 p-3 bg-light">
+		<div style="bottom: 0; height: 200px;">
 			<h4>NFT-AUCTION</h4>
-			<p>이용약관 고객센터..주소..어쩌구</p>
+			<hr>
+			<br>
+			<a href="#">이용약관</a> &nbsp;
+			<a href="#">사이트안내</a>
+			<br><br>
+			<small>문의 nftauction_admin@gmail.com</small>
 		</div>
-	</footer>
+	</div>
 	<!-- hidden -->
 	<input type="hidden" id="login_result" value="${loginResult }">
 	<input type="hidden" id="email_result" value="${emailResult }">

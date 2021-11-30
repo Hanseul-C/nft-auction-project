@@ -38,4 +38,10 @@ public interface MemberService {
 
 	//구매내역
 	List<PaymentVO> readPaymentAll(String memberId);
+	
+	//작품 수익금
+	int readProfit(String memberId);
+	
+	//회원 정산금
+	Integer readRefund(String memberId);
 }

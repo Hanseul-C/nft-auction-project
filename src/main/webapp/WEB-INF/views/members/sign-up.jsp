@@ -5,22 +5,19 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<!-- MetaMask api -->
-<script src="https://unpkg.com/@metamask/detect-provider/dist/detect-provider.min.js"></script>
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <!-- 모바일 디바이스에서 터치/줌 등을 지원하기 위한 meta 태그 -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- Bootstrap -->
 <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 <!-- Popper JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<!-- CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.1.3/dist/zephyr/bootstrap.min.css">
 <!-- iamport.payment.js -->
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
-<!-- CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/minty/bootstrap.min.css" integrity="sha384-H4X+4tKc7b8s4GoMrylmy2ssQYpDHoqzPa9aKXbDwPoPUA3Ra8PA5dGzijN+ePnH" crossorigin="anonymous">
 <!-- JavaScript : submitAble() -->
 <script type="text/javascript">		
 	var id_check=false; //아이디 중복체크
@@ -67,39 +64,41 @@
 </head>
 <body style="text-align: center;">
 	<!-- header -->
-	<nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
-		<a class="navbar-brand" href="../main">NFT-AUCTION</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse"
-			data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
-			aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="navbarNavDropdown">
-			<ul class="navbar-nav ml-auto">
-				<li class="nav-item"><a class="nav-link" href="../arts/register">작품등록</a>
-				</li>
-				<c:if test="${empty sessionScope.memberId }">
-					<li class="nav-item"><a class="nav-link" href="login">로그인</a>
+	<nav class="navbar navbar-expand-lg navbar-light bg-warning sticky-top">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="../main">NFT-AUCTION</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNavDropdown">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item"><a class="nav-link" href="../arts/register">작품등록</a>
 					</li>
-					<li class="nav-item"><a class="nav-link"
-						href="sign-up">회원가입</a></li>
-				</c:if>
-				<c:if test="${not empty sessionScope.memberId }">
-					<li class="nav-item"><a class="nav-link" href="logout">로그아웃</a></li>
-					<li class="nav-item"><a class="nav-link"
-						href="my-page/member">마이페이지</a></li>
-				</c:if>
-			</ul>
+					<c:if test="${empty sessionScope.memberId }">
+						<li class="nav-item"><a class="nav-link" href="login">로그인</a>
+						</li>
+						<li class="nav-item"><a class="nav-link"
+							href="sign-up">회원가입</a></li>
+					</c:if>
+					<c:if test="${not empty sessionScope.memberId }">
+						<li class="nav-item"><a class="nav-link" href="logout">로그아웃</a></li>
+						<li class="nav-item"><a class="nav-link"
+							href="my-page/member">마이페이지</a></li>
+					</c:if>
+				</ul>
+			</div>
 		</div>
 	</nav>
 	<br>
 	<!-- body -->
-	<div class="container">
+	<div class="container" style="padding-bottom: 200px">
 		<div class="row justify-content-center">
 			<div class="col-sm-6">
-				<div class="card">
-					<div class="card-body">
-						<h1>회원가입</h1>
+				<div class="card border-primary mt-5">
+					<div class="card-body p-5">
+						<h2>회원가입</h2>
 						<form action="sign-up" method="post" onsubmit="return submitAble();">
 							<div class="input-group mb-3">
 								<input type="text" class="form-control" id="member_id" name="memberId" placeholder="아이디 입력" required aria-label="아이디 입력" aria-describedby="check_id">
@@ -117,7 +116,7 @@
 							<p><input type="text" class="form-control" name="memberNickname" placeholder="닉네임 입력" required></p>
 							<p><input type="text" class="form-control" id="member_phone" name="memberPhone" placeholder="전화번호 입력" required></p>
 							<p><input type="text" class="form-control" id="member_email" name="memberEmail" placeholder="이메일 입력" required></p>
-							<p><button class="enableEthereumButton btn btn-primary">메타마스크연동</button>
+							<p><button class="enableEthereumButton btn btn-primary" id="btn-kaikas">klaytn 연동</button>
 							<input type="submit" class="btn btn-primary" value="가입하기"></p>
 						</form>
 					</div>
@@ -127,15 +126,25 @@
 	</div>
 	<!-- footer -->
 <<<<<<< HEAD
+<<<<<<< HEAD
 	<footer class="bd-footer py-5 mt-5 bg-warning sticky-bottom">
 =======
 	<footer class="bd-footer py-5 mt-5 bg-warning fixed-bottom">
 >>>>>>> refs/remotes/origin/develop-yed
 		<div class="container py-5">
+=======
+	<div class="mt-5 p-3 bg-light">
+		<div style="bottom: 0; height: 200px;">
+>>>>>>> origin/develop-yed
 			<h4>NFT-AUCTION</h4>
-			<p>이용약관 고객센터..주소..어쩌구</p>
+			<hr>
+			<br>
+			<a href="#">이용약관</a> &nbsp;
+			<a href="#">사이트안내</a>
+			<br><br>
+			<small>문의 nftauction_admin@gmail.com</small>
 		</div>
-	</footer>
+	</div>
 	<!-- JavaScript -->
 	<script type="text/javascript">
 		$(function() {
@@ -262,21 +271,21 @@
 
 			}); //end confirm_pw blur()
 			
-			// TODO : 현재 request로 메타마스크 api만 실행하게 만듬. 
-			// 이제 계좌 account와 지갑 정보를 불러와서 저장시키고 유지시켜야할듯!
-			// 메타마스크연동 버튼 관련 코드 (메타마스크 창 띄우기)
-		  	const ethereumButton = document.querySelector('.enableEthereumButton');
-		  	// 메타마스크연동버튼을 클릭하면
-			ethereumButton.addEventListener('click', () => {
-		  		if (typeof window.ethereum !== 'undefined') {
-		  			console.log('MetaMask is installed!'); // 메타마스크가 설치된경우
-		  			//Will Start the metamask extension
-		  			ethereum.request({ method: 'eth_requestAccounts' });
-		  		} else { // 아니라면 설치할 수 있도록 유도하기.
-		  		    console.log('Please install MetaMask!');
-		  			location.href = "https://metamask.io/";
-		  		}  
-		  	}); // end metamask api
+			/* klaytn 적용 */
+			$('#btn-kaikas').click(function() {
+	               if (typeof window.klaytn !== 'undefined') {
+	                   console.log('kaikas installed!') // 카이카스가 설치된 경우
+	                   console.log('현재 네트워크 : ' + klaytn.networkVersion);
+	                   console.log('현재 지갑의 주소 : ' + klaytn.selectedAddress);
+	                   
+	                   klaytn.enable(); // 열기!
+	                   // Kaikas user detected. You can now use the provider.
+	                   const provider = window['klaytn'] // provider에 주입하기.
+	               } else { // 설치되지 않은 경우, 설치할 수 있도록 유도하기.
+	                   location.href = 'https://chrome.google.com/webstore/detail/kaikas/jblndlipeogpafnldhgmapagcccfchpi?hl=ko';
+	                          
+	               }
+            }); // end btn-kaikas.click()
 
 			/* 전화번호 형식적용 */
 			$('#member_phone').keyup(function(){

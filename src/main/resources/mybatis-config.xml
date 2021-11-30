@@ -83,6 +83,13 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<property name="merchantUid" value="merchant_uid"/>
 		<property name="paymentDate" value="payment_date"/>
 		<property name="paymentType" value="payment_type"/>
+		<property name="artFileName" value="art_file_name"/>
+		
+		<property name="refund" value="refund"/>
+		<property name="refundNo" value="refund_no"/>
+		<property name="memberId" value="member_id"/>
+		<property name="refundAccount" value="refund_account"/>
+		<property name="refundMoney" value="refund_money"/>
 	</properties>
 	
 	<settings>

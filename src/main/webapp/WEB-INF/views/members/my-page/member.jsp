@@ -5,23 +5,26 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <!-- 모바일 디바이스에서 터치/줌 등을 지원하기 위한 meta 태그 -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- 제이쿼리 -->
-<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<!-- 부트스트랩 -->
-<link rel="stylesheet"
-	href="//maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
-<script src="//code.jquery.com/jquery.min.js"></script>
-<script
-	src="//maxcdn.bootstrapcdn.com/bootstrap/latest/js/bootstrap.min.js"></script>
-
-<title>마이 페이지(일단헤더없이사이드바만추가함!)</title>
+<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<!-- CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.1.3/dist/zephyr/bootstrap.min.css">
+<title>마이 페이지</title>
 <style type="text/css">
 /* 사이드바 래퍼 스타일 */
+<<<<<<< HEAD
 .aside {
 	width: 30%;
 }
+=======
+>>>>>>> origin/develop-yed
 #page-wrapper {
 	padding-left: 250px;
 }
@@ -66,37 +69,42 @@
 	width: 30%;
 	align: left;
 }
+<<<<<<< HEAD
 .section {
 	width: 70%;
 	align : right;
 }
+=======
+>>>>>>> origin/develop-yed
 </style>
 </head>
 <body>
 	<!-- header -->
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-		<a class="navbar-brand" href="../../main">NFT-AUCTION</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse"
-			data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
-			aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="navbarNavDropdown">
-			<ul class="navbar-nav ml-auto">
-				<li class="nav-item"><a class="nav-link" href="../../arts/register">작품등록</a>
-				</li>
-				<c:if test="${empty sessionScope.memberId }">
-					<li class="nav-item"><a class="nav-link" href="../login">로그인</a>
+	<nav class="navbar navbar-expand-lg navbar-light bg-warning sticky-top">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="../../main">NFT-AUCTION</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNavDropdown">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item"><a class="nav-link" href="../../arts/register">작품등록</a>
 					</li>
-					<li class="nav-item"><a class="nav-link"
-						href="../sign-up">회원가입</a></li>
-				</c:if>
-				<c:if test="${not empty sessionScope.memberId }">
-					<li class="nav-item"><a class="nav-link" href="../logout">로그아웃</a></li>
-					<li class="nav-item"><a class="nav-link"
-						href="member">마이페이지</a></li>
-				</c:if>
-			</ul>
+					<c:if test="${empty sessionScope.memberId }">
+						<li class="nav-item"><a class="nav-link" href="../login">로그인</a>
+						</li>
+						<li class="nav-item"><a class="nav-link"
+							href="../sign-up">회원가입</a></li>
+					</c:if>
+					<c:if test="${not empty sessionScope.memberId }">
+						<li class="nav-item"><a class="nav-link" href="../logout">로그아웃</a></li>
+						<li class="nav-item"><a class="nav-link"
+							href="member">마이페이지</a></li>
+					</c:if>
+				</ul>
+			</div>
 		</div>
 	</nav>
 	<aside class="aside">
@@ -116,34 +124,68 @@
 		</div>
 	</aside>
 
-	<section class="section">
+	<section class="section" style="text-align: center;">
 		<div id="page-wrapper">
 			<!-- 본문 헤더 -->
-			<div id="page-content-wrapper">
+			<div id="page-content-wrapper" style="text-align: left;">
 				<div class="container-fluid">
 					<h1>회원 정보</h1>
+					<hr>
 				</div>
 			</div>
 			
-			<div class="content">
-				<!-- 회원 정보 기본적으로 보여주기 -->
-				<!-- 아이디, 비밀번호(수정페이지로) 이름, 닉네임, 전화번호, 이메일 -->
-				<p>아이디</p><p>${vo.memberId }</p>
-				<p>비밀번호<button type="button" id="btn-password" onclick="location.href='password-change'">비밀번호 변경</button></p>
-				<p>이름</p><p>${vo.memberName}</p>
-				<p>닉네임</p><p>${vo.memberNickname }</p>
-				<p>전화번호</p><p>${vo.memberPhone }</p>
-				<p>이메일</p><p>${vo.memberEmail }</p>
+			<div class="container mt-5" style="padding-bottom: 200px">
+				<div class="row justify-content-center">
+					<div class="col-sm-7">
+						<div class="card">
+							<div class="card-body m-3">
+								<table class="table table-hover">
+								  <tbody>
+								    <tr>
+								      <th scope="row">아이디</th>
+								      <td>${vo.memberId }</td>
+								    </tr>
+								    <tr>
+								      <th scope="row">이름</th>
+								      <td>${vo.memberName}</td>
+								    </tr>
+								    <tr>
+								      <th scope="row">닉네임</th>
+								      <td>${vo.memberNickname}</td>
+								    </tr>
+								    <tr>
+								      <th scope="row">전화번호</th>
+								      <td>${vo.memberPhone }</td>
+								    </tr>
+								    <tr>
+								      <th scope="row">이메일</th>
+								      <td>${vo.memberEmail }</td>
+								    </tr>
+								  </tbody>
+								</table>
+							</div>
+							<div class="btn-group" role="group" aria-label="Basic outlined example">
+								<button type="button" class="btn btn-outline-primary" id="btn-password" onclick="location.href='password-change'">비밀번호 변경</button>
+								<button type="button" class="btn btn-outline-primary" onclick="location.href='update'">회원정보수정</button>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
-			
-			<div class="content-btn">
-				<button type="button" onclick="location.href='update'">회원정보수정</button>
-				
+			<!-- footer -->
+			<div class="mt-5 p-3 bg-light">
+				<div style="bottom: 0; height: 200px;">
+					<h4>NFT-AUCTION</h4>
+					<hr>
+					<br>
+					<a href="#">이용약관</a> &nbsp;
+					<a href="#">사이트안내</a>
+					<br><br>
+					<small>문의 nftauction_admin@gmail.com</small>
+				</div>
 			</div>
-			
 		</div>
 	</section>
-	
 	<script type="text/javascript">
 	
 	</script>

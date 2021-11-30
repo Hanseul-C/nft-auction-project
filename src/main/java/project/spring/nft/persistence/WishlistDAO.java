@@ -26,4 +26,7 @@ public interface WishlistDAO {
 	//작품정보 수정 시 위시리스트도 수정
 	int updateArt(ArtVO vo);
 	
+	//작품 삭제 시 위시리스트 삭제
+	int deleteArt(int artNo);
+	
 } // end WishlistDAO

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="project.spring.nft.RefundMapper">
+	
+	<insert id="insert">
+		insert into ${refund} (${memberId}, ${refundAccount}, ${refundMoney})
+		values(#{memberId}, #{refundAccount}, #{refundMoney})
+	</insert>
+	
+	<!-- 회원의 정산받은 내역  -->
+	<select id="select" resultType="Integer">
+		select sum(${refundMoney})
+		from ${refund}
+		where ${memberId}=#{memberId}
+	</select>
+</mapper>

@@ -63,19 +63,21 @@ public class ArtDAOImple implements ArtDAO {
 	@Override
 	public int getArtNameNumsOfRecords(String keyword) {
 		logger.info("getArtNameNumsOfRecords() 호출");
+		keyword="%"+keyword+"%";
 		return sqlSession.selectOne(NAMESPACE+".select_art_name_cnt", keyword);
 	}
 	
 	@Override
 	public int getNicknameNumsOfRecords(String keyword) {
 		logger.info("getNicknameNumsOfRecords() 호출");
+		keyword="%"+keyword+"%";
 		return sqlSession.selectOne(NAMESPACE+".select_nickname_cnt", keyword);
 	}
 
 	@Override
 	public List<ArtVO> selectArtName(PageCriteria criteria, String keyword) {
 		logger.info("selectArtName() 호출 : keyword = "+keyword+", criteria = "+ criteria);
-		keyword=keyword+"%";
+		keyword="%"+keyword+"%";
 		Map<String, Object> searchMap=new HashMap<String, Object>();
 		searchMap.put("start", criteria.getStart());
 		searchMap.put("end", criteria.getEnd());
@@ -86,8 +88,8 @@ public class ArtDAOImple implements ArtDAO {
 
 	@Override
 	public List<ArtVO> selectMemberNickname(PageCriteria criteria, String keyword) {
-		logger.info("selectMemberNo() 호출");
-		keyword=keyword+"%";
+		logger.info("selectMemberNickname() 호출");
+		keyword="%"+keyword+"%";
 		Map<String, Object> searchMap=new HashMap<String, Object>();
 		searchMap.put("start", criteria.getStart());
 		searchMap.put("end", criteria.getEnd());
@@ -111,9 +113,13 @@ public class ArtDAOImple implements ArtDAO {
 	} //end updateView()
 
 	@Override
-	public List<ArtVO> selectMemberId(String memberId) {
+	public List<ArtVO> selectMemberId(PageCriteria criteria, String memberId) {
 		logger.info("select() 호출");
-		return sqlSession.selectList(NAMESPACE + ".select_by_member_id", memberId);
+		Map<String, Object> artMap=new HashMap<String, Object>();
+		artMap.put("start", criteria.getStart());
+		artMap.put("end", criteria.getEnd());
+		artMap.put("memberId", memberId);
+		return sqlSession.selectList(NAMESPACE + ".select_my_art", artMap);
 	}
 
 	@Override
@@ -152,6 +158,7 @@ public class ArtDAOImple implements ArtDAO {
 		logger.info("selectWinBid() 호출 : memberId = "+memberId);
 		return sqlSession.selectList(NAMESPACE+".select_win_list", memberId);
 	}
+<<<<<<< HEAD
 
 	@Override
 	public List<ArtVO> selectNotAuction() {
@@ -159,4 +166,12 @@ public class ArtDAOImple implements ArtDAO {
 		return sqlSession.selectList(NAMESPACE + ".select_not_auction");
 	}
 
+=======
+	
+	@Override
+	public int getTotalMyArt(String memberId) {
+		logger.info("getTotalMyArt() 호출");
+		return sqlSession.selectOne(NAMESPACE+".select_my_art_count", memberId); 
+	} 
+>>>>>>> origin/develop-yed
 }

@@ -6,8 +6,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <insert id="insert">
 	insert into ${artPayment}
+<<<<<<< HEAD
 	(${memberId}, ${artNo}, ${artName}, ${artPrice}, ${merchantUid}, ${artFileName}, ${paymentType})
 	values (#{memberId}, #{artNo}, #{artName}, #{artPrice}, #{merchantUid}, #{artFileName}, #{paymentType})
+=======
+	(${memberId}, ${artNo}, ${artName}, ${artPrice}, ${merchantUid}, ${paymentType}, ${artFileName})
+	values (#{memberId}, #{artNo}, #{artName}, #{artPrice}, #{merchantUid}, #{paymentType}, #{artFileName})
+>>>>>>> origin/develop-yed
 </insert>
 
 <select id="select_by_member_id" resultType="PaymentVO">
@@ -35,4 +40,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	where ${memberId}=#{memberId}
 	order by ${paymentDate} desc
 </select>
+
+<!-- 판매 총 금액 -->
+<select id="select_profit" resultType="Integer">
+	select sum(${artPrice})
+	from ${artPayment}
+	where ${artNo} IN (
+		select ${artNo}
+		from ${art}
+		where ${memberId}=#{memberId}
+	)
+</select>
+
 </mapper>

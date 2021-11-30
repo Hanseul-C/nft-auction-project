@@ -30,7 +30,7 @@ public class PaymentServiceImple implements PaymentService {
 	}
 
 	@Override
-	public PaymentVO selectByMemberId(String memberId) {
+	public List<PaymentVO> selectByMemberId(String memberId) {
 		logger.info("selectByMemberId() 호출");
 		return paymentDAO.selectByMemberId(memberId);
 	}

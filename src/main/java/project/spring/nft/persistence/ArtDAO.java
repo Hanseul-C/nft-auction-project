@@ -40,9 +40,11 @@ public interface ArtDAO {
 	//회원 낙찰내역
 	List<ArtVO> selectWinBid(String memberId);
 	// 작품 멤버 아이디로 검색, 등록 내역에서 쓸거임
-	List<ArtVO> selectMemberId(String memberId);
+	List<ArtVO> selectMemberId(PageCriteria criteria, String memberId);
 	// 작품 WISH_COUNT 올라가기, 내려가기(업데이트)
 	int updateWishCount(int artNo, int count);
+	//등록내역 개수
+	int getTotalMyArt(String memberId);
 	
 	// 경매에 등록되지 않은 작품 정보 조회
 	List<ArtVO> selectNotAuction();

@@ -60,4 +60,9 @@ public class WishlistDAOImple implements WishlistDAO {
 		return sqlSession.update(NAMESPACE+".update_art", vo);
 	}
 	
+	@Override
+	public int deleteArt(int artNo) {
+		logger.info("deleteArt() 호출");
+		return sqlSession.delete(NAMESPACE+".delete_art", artNo);
+	}
 } // end WishlistDAOImple class

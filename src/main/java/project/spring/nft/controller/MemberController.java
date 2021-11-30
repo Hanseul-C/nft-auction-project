@@ -72,9 +72,24 @@ public class MemberController {
 		}
 	} // end joinMemberPOST()
 
+	
 	@GetMapping("/login")
-	public void loginMemberGET() {
+	public void loginMemberGET(HttpServletRequest request) {
 		logger.info("loginMemberGET() 호출");
+		
+		//만약 url에 parameter가 있다면
+		String uri=request.getRequestURI();
+		logger.info("요청 uri : "+uri);
+		String contextRoot=request.getContextPath();
+		logger.info("contextRoot : "+contextRoot);
+		uri=uri.replace(contextRoot, "");
+		String queryString=request.getQueryString();
+		logger.info("쿼리 스트링 : "+queryString);
+		
+		if(queryString != null) { //상세페이지의 댓글에서 로그인 이동한 경우
+			HttpSession session=request.getSession();
+			session.setAttribute("targetURL","../arts/detail?"+queryString);
+		}
 	} // end loginMemberGET()
 
 	@PostMapping("/login")
@@ -263,8 +278,16 @@ public class MemberController {
 	} // end deletePOST()
 	
 	@GetMapping("/find-id")
-	public void findId() {
+	public void findId(HttpServletRequest request, Model model) {
 		logger.info("findId() 호출");
+		HttpSession session = request.getSession();
+		String memberId = (String) session.getAttribute("memberId");
+		
+		if(memberId == null) {
+			model.addAttribute("accessResult", "success");
+		}else {
+			model.addAttribute("accessResult", "fail");
+		}
 	} //end findId()
 	
 	@PostMapping("/find-id/phone")
@@ -286,8 +309,16 @@ public class MemberController {
 	} //end findIdasEmail()
 	
 	@GetMapping("/find-password")
-	public void findPasswordGET() {
+	public void findPasswordGET(HttpServletRequest request, Model model) {
 		logger.info("findPasswordGET() 호출");
+		HttpSession session = request.getSession();
+		String memberId = (String) session.getAttribute("memberId");
+		
+		if(memberId == null) {
+			model.addAttribute("accessResult", "success");
+		}else {
+			model.addAttribute("accessResult", "fail");
+		}
 	} //end findPasswordGET()
 	
 	@PostMapping("/find-password")
@@ -297,7 +328,9 @@ public class MemberController {
 		if(vo != null) { //일치하는 회원정보가 있으면
 			String randomPassword=getRamdomPassword(7);
 			logger.info("randomPassword = "+randomPassword);
-			int update=memberService.updateMemberPassword(memberId, randomPassword);
+			//임시번호도 암호화 필요함
+			String encodeRandom=passEncoder.encode(randomPassword);
+			int update=memberService.updateMemberPassword(memberId, encodeRandom);
 			logger.info(update+"개 임시비밀번호 변경");
 			//TODO 메일로 임시비번 보내기
 			int result=sendMailTest(memberEmail, randomPassword);
@@ -365,7 +398,8 @@ public class MemberController {
     
     // 현아 추가. 등록작품페이지!
     @GetMapping("/my-page/artlist")
-    public void artlistGET(Model model, HttpServletRequest request, Integer page, Integer numsPerPage) {
+    public void artlistGET(Model model, HttpServletRequest request, 
+    		Integer page, Integer numsPerPage) {
 		logger.info("artlistGET() 호출");
 		logger.info("page = "+page+", numsPerPage = "+numsPerPage);
 
@@ -382,14 +416,29 @@ public class MemberController {
 		HttpSession session = request.getSession();
 		String memberId = (String) session.getAttribute("memberId");
 
-		List<ArtVO> list = artService.readByMemberId(memberId);
+		List<ArtVO> list = artService.readByMemberId(criteria, memberId);
 		model.addAttribute("list", list);
-		
 		
 		PageMaker pageMaker=new PageMaker();
 		pageMaker.setCriteria(criteria);
+		pageMaker.setTotalCount(artService.getTotalMyArt(memberId));
 		pageMaker.setPageData();
+		logger.info("이전 버튼 존재 유무 : "+pageMaker.isHasPrev());
+		logger.info("다음 버튼 존재 유무 : "+pageMaker.isHasNext());
 		model.addAttribute("pageMaker", pageMaker);
+		
+		//수익금 내역
+		try {
+			double profit=memberService.readProfit(memberId); //총 수익금
+			//정산받은 금액이 있다면 빼기
+			Integer refund=memberService.readRefund(memberId);
+			profit=profit-refund;
+			profit= profit - (profit*0.05);
+			model.addAttribute("profit", profit);
+		} catch (NullPointerException e) {
+			model.addAttribute("profit", 0);
+		}
+		
 
 	} // end artlistGET()
 
